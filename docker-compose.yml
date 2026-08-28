@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: mobilitybridge
+      POSTGRES_USER: mobilitybridge
+      POSTGRES_PASSWORD: mobilitybridge
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mobilitybridge"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7.4-alpine
+    ports: ["6379:6379"]
+  rabbitmq:
+    image: rabbitmq:4.0-management-alpine
+    ports: ["5672:5672", "15672:15672"]
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.124.1
+    ports: ["4317:4317"]
