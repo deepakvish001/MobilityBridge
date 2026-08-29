@@ -1,0 +1,4 @@
+namespace MobilityBridge.Application.UseCases;
+public sealed record DispatchServiceCommand(Guid OrganizationId,Guid ActorId,Guid TargetId,string Action);
+public sealed record DispatchServiceResult(Guid TargetId,bool Accepted,string Reason);
+public static class DispatchService{public static DispatchServiceResult Execute(DispatchServiceCommand c){if(c.OrganizationId==Guid.Empty||c.ActorId==Guid.Empty||string.IsNullOrWhiteSpace(c.Action))throw new ArgumentException("Invalid command scope.");return new(c.TargetId,true,"Validated for persistence.");}}
